@@ -1,0 +1,11 @@
+# Bazel picks up host-OS-specific config lines from bazelrc files. For example, if the host OS is
+# Linux and you run bazel build, Bazel picks up lines starting with build:linux. Supported OS
+# identifiers are `linux`, `macos`, `windows`, `freebsd`, and `openbsd`. Enabling this flag is
+# equivalent to using `--config=linux` on Linux, `--config=windows` on Windows, etc.
+# Docs: https://bazel.build/reference/command-line-reference#flag--enable_platform_specific_config
+common --enable_platform_specific_config
+
+# Don't try and auto detect the cc toolchain, as we use our own llvm toolchain on macos.
+build:macos --action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+build:macos --incompatible_strict_action_env=true
+build:macos --incompatible_enable_cc_toolchain_resolution
